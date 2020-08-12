@@ -1,0 +1,17 @@
+.navbar {
+    border: 2px solid black;
+    text-align: center;
+    justify-content: center;
+    height: 10vh;
+}
+.navbar-nav {
+    border: 2px solid rgb(255, 229, 234);
+    width: 100vw;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+}
+.bank-container {
+    border: 5px solid blue;
+    height: 88.25vh;
+}
