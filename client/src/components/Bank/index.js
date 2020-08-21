@@ -1,10 +1,12 @@
 import React from "react";
+import { Photo, Name, Deposit, Withdraw, FormBtn } from "../../components/Form";
 import "../../style.css";
 
 function Bank(props) {
   return (
     <div className="container bank-container">
       <div className="table-container">
+        <form id="form">
         <table class="table">
           <thead>
             <tr className="thead">
@@ -79,6 +81,7 @@ function Bank(props) {
             </tr>
           </tbody>
         </table>
+        </form>
       </div>
     </div>
   );

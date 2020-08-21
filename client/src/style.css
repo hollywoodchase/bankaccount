@@ -27,3 +27,7 @@
 tr {
     text-align: center;
 }
+#form {
+    border: 2px solid blue;
+    text-align: center;
+}

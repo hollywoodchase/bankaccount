@@ -1,95 +1,138 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import "../../style.css"
+import "../../style.css";
+import { Col, Row, Container } from "../../components/Grid";
+import {
+  Photo,
+  Name,
+  Deposit,
+  Withdraw,
+  Balance,
+  FormBtn,
+} from "../../components/Form";
 
 class Transactions extends Component {
   state = {
     holder: [],
+    photo: "",
     name: "",
-    email: "",
-    selection: "",
-    wish: "",
-    photo: ""
+    balance: "",
+    deposit: "",
+    withdraw: "",
   };
 
   componentDidMount() {
-    this.loadBooks();
+    this.loadHolders();
   }
 
-  loadBooks = () => {
-    API.getBooks()
-      .then(res =>
-        this.setState({ books: res.data, name: "", email: "", selection: "", wish: "", photo: "" })
+  loadHolders = () => {
+    API.getHolders()
+      .then((res) =>
+        this.setState({
+          holders: res.data,
+          photo: "",
+          name: "",
+          balance: "",
+          deposit: "",
+          withdraw: "",
+        })
       )
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
-  deleteBook = id => {
-    API.deleteBook(id)
-      .then(res => this.loadBooks())
-      .catch(err => console.log(err));
+  deleteHolder = (id) => {
+    API.deleteHolder(id)
+      .then((res) => this.loadHolders())
+      .catch((err) => console.log(err));
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event) => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
-  handleFormSubmit = event => {
+  handleFormSubmit = (event) => {
     event.preventDefault();
-    if (this.state.name && this.state.email) {
-      API.saveBook({
+    if (this.state.name && this.state.deposit) {
+      API.saveHolder({
+        photo: this.state.photo,
         name: this.state.name,
-        email: this.state.email,
-        selection: this.state.selection,
-        wish: this.state.wish,
-        photo: this.state.photo
+        balance: this.state.balance,
+        deposit: this.state.deposit,
+        withdraw: this.state.withdraw,
       })
-        .then(res => this.loadBooks())
-        .catch(err => console.log(err));
+        .then((res) => this.loadHolders())
+        .catch((err) => console.log(err));
     }
   };
 
   render() {
     return (
       <Container fluid>
-        <Row>
+        <Row id="trans-row">
+          <Col size="md-12">
+            <form id="form">
+              <Photo
+                value={this.state.photo}
+                src={this.state.photo}
+                onChange={this.handleInputChange}
+                name="photo"
+                placeholder="0"
+              />
+            </form>
+          </Col>
           <Col size="md-12">
             <form id="form">
               <Name
-                value={this.state.name}
+                innerText="Jojo"
                 onChange={this.handleInputChange}
                 name="name"
-                placeholder="Emo Joe"
+                placeholder="0"
               />
-              <Email
-                value={this.state.email}
+            </form>
+          </Col>
+          <Col size="md-12">
+            <form id="form">
+              <Balance
+                value={this.state.balance}
                 onChange={this.handleInputChange}
-                name="email"
-                placeholder="emoD00D@myspace.com"
+                name="balance"
+                placeholder="0"
               />
-              <Selection
-                value={this.state.selection}
+            </form>
+          </Col>
+          <Col size="md-12">
+            <form id="form">
+              <Deposit
+                value={this.state.deposit}
                 onChange={this.handleInputChange}
-                name="selection"
-                placeholder=""
+                name="deposit"
+                placeholder="Deposit"
               />
-              <Wish
-                value={this.state.wish}
+            </form>
+          </Col>
+          <Col size="md-12">
+            <form id="form">
+              <Withdraw
+                value={this.state.withdraw}
                 onChange={this.handleInputChange}
-                name="wish"
-                placeholder=""
+                name="withdraw"
+                placeholder="Withdraw"
               />
-              <Photo
-                value={this.state.photo}
-                onChange={this.handleInputChange}
-                name="photo"
-                placeholder="http://myspace.com/emod00d/profilePic"
-              />
+            </form>
+          </Col>
+          <Col size="md-12">
+            <form id="form">
               <FormBtn
-                disabled={!(this.state.name && this.state.email && this.state.selection)}
+                disabled={
+                  !(
+                    this.state.name &&
+                    this.state.deposit &&
+                    this.state.selection
+                  )
+                }
                 onClick={this.handleFormSubmit}
               >
                 Submit Request
